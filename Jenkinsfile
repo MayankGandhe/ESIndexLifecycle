@@ -13,6 +13,9 @@ pipeline {
             agent {
                 docker { image 'node' }
             }
+                environment {
+        HOME = '.'
+    }
             steps {
                 sh """
                       echo ${params.codeLocation}                      
