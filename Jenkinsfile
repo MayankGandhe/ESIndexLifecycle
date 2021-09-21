@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo 'Deploying....'
                   sh """
-                    cd ${params.codeLocation}/dist
+                    cd dist
                     aws s3 cp . s3://${params.bucketName}/ --recursive
                   """
             }
