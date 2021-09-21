@@ -18,6 +18,7 @@ pipeline {
                       echo ${params.codeLocation}                      
                       cd ${params.codeLocation}
                       ls
+                      npm cache clean --force
                       npm install
                       ls
                       """
