@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Upload ') {
                       agent {
-                docker { image 'trion/ng' }
+                docker { image 'trion/ng-cli' }
             }
                 environment {
         HOME = '.'
