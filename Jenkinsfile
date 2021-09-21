@@ -24,7 +24,6 @@ pipeline {
                       npm cache clean --force
                       npm install
                       npm install @angular/cli
-                      npm cache clean
                       npm run-script ng build
                       ls
                       """
