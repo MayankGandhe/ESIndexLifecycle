@@ -17,8 +17,7 @@ pipeline {
                 sh """
                       echo ${params.codeLocation}                      
                       cd ${params.codeLocation}
-                      echo "Building Code"
-                      whoami
+                      ls
                       npm install
                       ls
                       """
