@@ -10,6 +10,9 @@ pipeline {
     }
     stages {
         stage('Build') {
+            agent {
+                docker { image 'node:14-alpine' }
+            }
             steps {
                 sh """
                       echo ${params.codeLocation}                      
