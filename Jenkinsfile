@@ -23,24 +23,10 @@ pipeline {
                       ls
                       npm cache clean --force
                       npm install
+                      npm install @angular/cli
+                      ng build
                       ls
                       """
-            }
-        }
-        stage('Upload ') {
-                      agent {
-                docker { image 'trion/ng-cli' }
-            }
-                environment {
-        HOME = '.'
-    }
-            steps {
-                
-                echo 'Testing..'
-                sh """
-                    cd ${params.codeLocation}
-                    ng build
-                  """
             }
         }
         stage('Deploy') {
