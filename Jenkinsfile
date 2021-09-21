@@ -28,6 +28,12 @@ pipeline {
             }
         }
         stage('Upload ') {
+                      agent {
+                docker { image 'trion/ng' }
+            }
+                environment {
+        HOME = '.'
+    }
             steps {
                 
                 echo 'Testing..'
