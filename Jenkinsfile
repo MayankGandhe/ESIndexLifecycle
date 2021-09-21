@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker { image 'node' }
+                docker { image 'trion/ng-cli' }
             }
                 environment {
         HOME = '.'
