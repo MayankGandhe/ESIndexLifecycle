@@ -22,14 +22,14 @@ pipeline {
                           passwordVariable: 'AZURE_CLIENT_SECRET', 
                                                            usernameVariable: 'AZURE_CLIENT_ID')]) {
                   sh """
-              az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
               # Set default subscription
-              az account set --subscription $AZURE_SUBSCRIPTION_ID
+              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
               # Execute upload to Azure
-              az storage container create --account-name $AZURE_STORAGE_ACCOUNT --name $JOB_NAME --auth-mode login
-              az storage blob upload-batch --destination ${JOB_NAME} --source ./text --account-name $AZURE_STORAGE_ACCOUNT
+              /root/bin/az storage container create --account-name $AZURE_STORAGE_ACCOUNT --name $JOB_NAME --auth-mode login
+              /root/bin/az storage blob upload-batch --destination ${JOB_NAME} --source ./text --account-name $AZURE_STORAGE_ACCOUNT
               # Logout from Azure
-              az logout                  """
+              /root/bin/az logout                  """
                          }
             }
         }
