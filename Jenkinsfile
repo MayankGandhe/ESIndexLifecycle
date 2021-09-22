@@ -22,7 +22,6 @@ pipeline {
                           passwordVariable: 'AZURE_CLIENT_SECRET', 
                                                            usernameVariable: 'AZURE_CLIENT_ID')]) {
                   sh """
-                    cd dist
               az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
               # Set default subscription
               az account set --subscription $AZURE_SUBSCRIPTION_ID
