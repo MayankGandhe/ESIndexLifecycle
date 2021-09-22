@@ -1,7 +1,7 @@
 pipeline {
     agent any
      environment {
-    AZURE_SUBSCRIPTION_ID='161758cf-d810-4cf2-b377-e298c3720301'
+    AZURE_SUBSCRIPTION_ID='e625de60-c679-42bf-b5fb-a703f57aa5a4'
     AZURE_TENANT_ID='e88709d3-794e-40c8-b19b-66e6b066ef55'
     AZURE_STORAGE_ACCOUNT='frontend'
   }
