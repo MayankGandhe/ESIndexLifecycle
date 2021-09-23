@@ -53,6 +53,7 @@ withCredentials([azureServicePrincipal('azurecred')])
               /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
               cd ${params.codeLocation}
               ls
+              pwd
               /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./dist --account-name $AZURE_STORAGE_ACCOUNT
               # Logout from Azure
               /root/bin/az logout                  """
