@@ -18,15 +18,14 @@ pipeline {
             steps {
                 
                 echo 'Deploying....'
-                         withCredentials([usernamePassword(credentialsId: 'azuresp', 
-                          passwordVariable: 'AZURE_CLIENT_SECRET', 
-                                                           usernameVariable: 'AZURE_CLIENT_ID')]) {
+                        ## withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
+withCredentials([azureServicePrincipal('azurecred')]) 
+                
+{
                   sh """
-              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+              /root/bin/az login 
               # Set default subscription
-              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
-              # Execute upload to Azure
-              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT --auth-mode login
+              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT
               # Logout from Azure
               /root/bin/az logout                  """
                          }
