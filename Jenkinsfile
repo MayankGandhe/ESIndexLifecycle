@@ -25,7 +25,7 @@ withCredentials([azureServicePrincipal('azurecred')])
                   sh """
                   ls
               # Set default subscription
-              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source index.js --account-name $AZURE_STORAGE_ACCOUNT --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source index.js --account-name $AZURE_STORAGE_ACCOUNT 
               # Logout from Azure
               /root/bin/az logout                  """
                          }
