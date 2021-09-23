@@ -18,7 +18,7 @@ pipeline {
             steps {
                 
                 echo 'Deploying....'
-                        ## withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
+                       //withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
 withCredentials([azureServicePrincipal('azurecred')]) 
                 
 {
