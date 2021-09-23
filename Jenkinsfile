@@ -7,6 +7,7 @@ pipeline {
   }
    parameters {
         booleanParam(name: 'Refresh', defaultValue: false, description: 'Refresh this Job')
+        booleanParam(name: 'ProvisionInfra', defaultValue: false, description: 'Will create Storage account and Blob')
 
         string(name: 'codeLocation', defaultValue: '/', description: '')
         string(name: 'containerName', defaultValue: 'frontendweb', description: '')
@@ -39,7 +40,26 @@ pipeline {
             }
         }
 
-                stage('Deploy') {
+     stage('Infra Provision') {
+     when {
+        expression { ${params.ProvisionInfra} == true }
+      }
+            steps {
+                sh """
+                      echo ${params.codeLocation}                      
+                      cd ${params.codeLocation}
+                      ls
+                      pwd
+                      npm cache clean --force
+                      npm install
+                      npm install @angular/cli
+                      npm run-script ng build
+                      ls
+                      """
+            }
+        }
+
+        stage('Deploy') {
             steps {
                 
                 echo 'Deploying....'
@@ -63,6 +83,7 @@ withCredentials([azureServicePrincipal('azurecred')])
         }
        
     }
+    
         post {
     cleanup {
         cleanWs(cleanWhenFailure: false)
