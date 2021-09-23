@@ -17,6 +17,7 @@ pipeline {
          stage('Build') {
             agent {
                 docker { image 'trion/ng-cli'
+                          reuseNode true
                   //  args '-v '${params.codeLocation}:/usr/share/maven/ref/repository/'
 }
             }
