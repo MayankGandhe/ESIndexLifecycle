@@ -26,6 +26,8 @@ withCredentials([azureServicePrincipal('azurecred')])
                   ls
               /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
               # Set default subscription
+              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
+
               /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT --auth-mode login
               # Logout from Azure
               /root/bin/az logout                  """
