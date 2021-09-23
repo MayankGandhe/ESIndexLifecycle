@@ -14,27 +14,7 @@ pipeline {
 
     }
     stages {
-                stage('Deploy') {
-            steps {
-                
-                echo 'Deploying....'
-                       //withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
-withCredentials([azureServicePrincipal('azurecred')]) 
-                
-{
-                  sh """
-                  ls
-              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-              # Set default subscription
-              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
-
-              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT
-              # Logout from Azure
-              /root/bin/az logout                  """
-                         }
-            }
-        }
-        stage('Build') {
+         stage('Build') {
             agent {
                 docker { image 'trion/ng-cli' }
             }
@@ -55,6 +35,27 @@ withCredentials([azureServicePrincipal('azurecred')])
             }
         }
 
+                stage('Deploy') {
+            steps {
+                
+                echo 'Deploying....'
+                       //withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
+withCredentials([azureServicePrincipal('azurecred')]) 
+                
+{
+                  sh """
+                  ls
+              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+              # Set default subscription
+              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
+
+              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./{params.codeLocation}/dist --account-name $AZURE_STORAGE_ACCOUNT
+              # Logout from Azure
+              /root/bin/az logout                  """
+                         }
+            }
+        }
+       
     }
         post {
     cleanup {
