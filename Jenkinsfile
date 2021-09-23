@@ -23,7 +23,6 @@ withCredentials([azureServicePrincipal('azurecred')])
                 
 {
                   sh """
-              /root/bin/az login 
               # Set default subscription
               /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT
               # Logout from Azure
