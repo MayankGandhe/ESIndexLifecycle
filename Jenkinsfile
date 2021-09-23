@@ -26,7 +26,7 @@ pipeline {
               # Set default subscription
               /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
               # Execute upload to Azure
-              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT
+              /root/bin/az storage blob upload-batch --destination ${params.containerName} --source ./AngularCode --account-name $AZURE_STORAGE_ACCOUNT --auth-mode login
               # Logout from Azure
               /root/bin/az logout                  """
                          }
