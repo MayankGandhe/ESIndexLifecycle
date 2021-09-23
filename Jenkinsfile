@@ -16,7 +16,9 @@ pipeline {
     stages {
          stage('Build') {
             agent {
-                docker { image 'trion/ng-cli' }
+                docker { image 'trion/ng-cli'
+                  //  args '-v '${params.codeLocation}:/usr/share/maven/ref/repository/'
+}
             }
                 environment {
         HOME = '.'
@@ -26,6 +28,7 @@ pipeline {
                       echo ${params.codeLocation}                      
                       cd ${params.codeLocation}
                       ls
+                      pwd
                       npm cache clean --force
                       npm install
                       npm install @angular/cli
