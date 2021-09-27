@@ -16,6 +16,11 @@ pipeline {
     }
     stages {
         stage('Infra Provision') {
+              when {
+        expression {
+            return params.ProvisionInfra == true ;
+        }
+    }
             steps {
                 
                 echo 'Deploying....'
