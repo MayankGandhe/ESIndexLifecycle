@@ -27,7 +27,6 @@ withCredentials([azureServicePrincipal('azurecred')])
               /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
               # Set default subscription
               /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
-              cd ${params.codeLocation}
               ls
               pwd
               /root/bin/az deployment group create --name addstorage --resource-group frontend --template-file StaticWebsiteHosting.arn
