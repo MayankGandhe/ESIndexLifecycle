@@ -78,7 +78,7 @@ withCredentials([azureServicePrincipal('azurecred')])
               cd ${params.codeLocation}
               ls
               pwd
-              az deployment group create --name addstorage --resource-group frontend --template-file StaticWebsiteHosting.arn
+              /root/bin/az deployment group create --name addstorage --resource-group frontend --template-file StaticWebsiteHosting.arn
               # Logout from Azure
               /root/bin/az logout                  """
                          }
