@@ -15,6 +15,27 @@ pipeline {
 
     }
     stages {
+        stage('Infra Provision') {
+            steps {
+                
+                echo 'Deploying....'
+withCredentials([azureServicePrincipal('azurecred')]) 
+                
+{
+                  sh """
+                  ls
+              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+              # Set default subscription
+              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
+              cd ${params.codeLocation}
+              ls
+              pwd
+              /root/bin/az deployment group create --name addstorage --resource-group frontend --template-file StaticWebsiteHosting.arn
+              # Logout from Azure
+              /root/bin/az logout                  """
+                         }
+            }
+        }
          stage('Build') {
             agent {
                 docker { image 'trion/ng-cli'
@@ -40,7 +61,7 @@ pipeline {
             }
         }
 
-   stage('Infra Provision') {
+   stage('Deploy') {
             steps {
                 
                 echo 'Deploying....'
@@ -62,28 +83,7 @@ withCredentials([azureServicePrincipal('azurecred')])
             }
         }
 
-        stage('Deploy') {
-            steps {
-                
-                echo 'Deploying....'
-                       //withCredentials([usernamePassword(credentialsId: 'azuresp',                          passwordVariable: 'AZURE_CLIENT_SECRET',usernameVariable: 'AZURE_CLIENT_ID')])
-withCredentials([azureServicePrincipal('azurecred')]) 
-                
-{
-                  sh """
-                  ls
-              /root/bin/az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-              # Set default subscription
-              /root/bin/az account set --subscription $AZURE_SUBSCRIPTION_ID
-              cd ${params.codeLocation}
-              ls
-              pwd
-              /root/bin/az deployment group create --name addstorage --resource-group frontend --template-file StaticWebsiteHosting.arn
-              # Logout from Azure
-              /root/bin/az logout                  """
-                         }
-            }
-        }
+        
        
     }
     
